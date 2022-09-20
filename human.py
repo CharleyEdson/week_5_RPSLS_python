@@ -12,3 +12,6 @@ class Human(Player):
             print(f'Choose {str(counter)} for {gesture}')
             sleep(1)
             counter += 1
+
+    def take_in_gestures(self):
+        self.choice_of_gesture = input('Choose your gesture: ')
