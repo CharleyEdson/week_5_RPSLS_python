@@ -1,10 +1,14 @@
 from time import sleep
 from player import Player
+from human import Human
+from AI import AI
 class Game:
     def __init__(self):
         self.player = Player()
         self.num_of_players = ''
-        self.gestures = ['Rock', 'Paper', 'Scissors', 'Lizzard', 'Spock']
+        
+        self.human = Human()
+        self.AI = AI()
 
     def display_welcome(self):
         print("Welcome to Rock Paper Scissors Lizard Spock.")
@@ -26,6 +30,7 @@ class Game:
                 play_game = False
                 
     def human_v_ai_game(self):
+        pass
 
 
     def run_game(self):
