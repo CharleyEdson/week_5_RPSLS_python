@@ -55,14 +55,26 @@ class Game:
     def test_up_to_now(self):
         print(self.player_one.choice_of_gesture)
 
-    #Need to still add in loop, and logic to determine which one wins
+    
     def human_v_ai_game(self):
         print('Use the number keys to enter your selection')
         #sleep(.5)
-        self.player_one.show_gestures()
-        self.player_one.take_in_gestures()
-        print(f'{self.player_one.name} chose {self.player_one.gestures[self.player_one.choice_of_gesture]}')
-        self.ai_one.ai_choose_gesture()
+        while self.player_one.win_count <2 or self.ai_one.win_count <2:
+            self.player_one.show_gestures()
+            self.player_one.take_in_gestures()
+            print(f'{self.player_one.name} chose {self.player_one.choice_of_gesture}')
+            self.ai_one.ai_choose_gesture()
+            self.game_rules_for_player(self.player_one.choice_of_gesture, self.ai_one.choice_of_gesture)
+            print(self.player_one.win_count)
+            print(self.ai_one.win_count)
+            if self.player_one.win_count >= 2:
+                print(f'{self.player_one.name} is victorious')
+                break
+            if self.ai_one.win_count >= 2:
+                print(f'{self.ai_one.name} is victorious')
+                break
+
+
         
 
     def human_v_human_game(self):
@@ -70,3 +82,75 @@ class Game:
 
     def display_gestures(self):
         pass
+
+    
+    def game_rules_for_player(self,gesture_one, gesture_two):
+        
+        if gesture_one == gesture_two:
+            print('They are the same, continue')
+            self.player_one.win_count += 0
+            self.ai_one.win_count += 0
+
+        #rock v scissors
+        elif gesture_one == 'Rock' and gesture_two == 'Scissors':
+            print('Rock Crushes Scissors')
+            self.player_one.win_count += 1
+        elif gesture_two == 'Rock' and gesture_one == 'Scissors':
+            print('Rock Crushes Scissors')
+            self.ai_one.win_count += 1
+
+        #scissors and paper
+        elif gesture_one == 'Scissors' and gesture_two == 'Paper':
+            print('Scissors cuts paper')
+            self.player_one.win_count += 1
+        elif gesture_two == 'Scissors' and gesture_one == 'Paper':
+                self.ai_one.win_count += 1
+
+        #paper and rock
+        elif gesture_one == 'Paper' and gesture_two == 'Rock':
+            print('Paper covers Rock')
+            self.player_one.win_count += 1
+        elif gesture_two == 'Paper' and gesture_one == 'Rock':
+                self.ai_one.win_count += 1
+        #rock and lizard
+        elif gesture_one == 'Rock' and gesture_two == 'Lizard':
+            print('Rock crushes Lizard')
+            self.player_one.win_count += 1
+        elif gesture_two == 'Rock' and gesture_one == 'Lizard':
+            self.ai_one.win_count += 1
+        #lizard and spock
+        elif gesture_one == 'Lizard' and gesture_two == 'Spock':
+            print('Lizard poisons Spock')            
+            self.player_one.win_count += 1
+        elif gesture_two == 'Lizard' and gesture_one == 'Spock':
+            self.ai_one.win_count += 1
+        #spock and scissors
+        elif gesture_one == 'Spock' and gesture_two == 'Scissors':
+            print('Spock smashes Scissors')            
+            self.player_one.win_count += 1
+        elif gesture_two == 'Spock' and gesture_one == 'Scissors':
+            self.ai_one.win_count += 1
+        #scissors and lizard
+        elif gesture_one == 'Scissors' and gesture_two == 'Lizard':
+            print('Scissors decapitates Lizard')            
+            self.player_one.win_count += 1
+        elif gesture_two == 'Scissors' and gesture_one == 'Lizard':
+            self.ai_one.win_count += 1
+        #lizard eats paper
+        elif gesture_one == 'Lizard' and gesture_two == 'Paper':
+            print('Lizard eats Paper')            
+            self.player_one.win_count += 1
+        elif gesture_two == 'Lizard' and gesture_one == 'Paper':
+            self.ai_one.win_count += 1
+        #paper disproves spock
+        elif gesture_one == 'Paper' and gesture_two == 'Spock':
+            print('Paper disproves Spock')            
+            self.player_one.win_count += 1
+        elif gesture_two == 'Paper' and gesture_one == 'Spock':
+            self.ai_one.win_count += 1
+        #Spock vaporizes Rock
+        elif gesture_one == 'Spock' and gesture_two == 'Rock':
+            print('Spock vaporizes Rock')            
+            self.player_one.win_count += 1
+        elif gesture_two == 'Spock' and gesture_one == 'Rock':
+            self.ai_one.win_count += 1
