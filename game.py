@@ -1,3 +1,4 @@
+from ast import Break
 from time import sleep
 from player import Player
 from human import Human
@@ -14,7 +15,8 @@ class Game:
     def run_game(self):
         self.display_welcome()
         self.how_many_players()
-        self.decide_on_game(self.type_of_game)
+        #if I want to go back to old way, use the _decide_on_game() function, not the update. - if the old way, need to create the new rules
+        self.decide_on_game_update(self.type_of_game)
         #self.test_up_to_now()
         
 
@@ -40,22 +42,33 @@ class Game:
                 print("Please choose a correct game type. Let's try that again.")
                 play_game = False
                 
+    ######################Old way##################################
     #This function instantiates the human or AI classes.            
     def decide_on_game(self, game_type):
         if game_type == 0:
             self.player_one = Human('Player one')
-            self.ai_one = AI()
+            self.ai_one = AI()            
             self.human_v_ai_game()
         if game_type == 1:
             self.player_one = Human('Player one')
             self.player_two = Human('Player two')
             self.human_v_human_game()
 
-    #This is a test function to check if everything is working up to date.
-    def test_up_to_now(self):
-        print(self.player_one.choice_of_gesture)
+    ######################New way##################################
+    #This function is same as above, but using player_one & player_two as both a human or ai
+    def decide_on_game_update(self, game_type):
+        if game_type == 0:
+            self.player_one = Human('Player one')
+            self.player_two = AI()
+            self.player_v_player_game()
+        if game_type == 1:
+            self.player_one = Human('Player one')
+            self.player_two = Human('Player two')
+            self.player_v_player_game()
 
-    
+
+
+    ######################Old way##################################
     def human_v_ai_game(self):
         print('Use the number keys to enter your selection')
         #sleep(.5)
@@ -74,16 +87,80 @@ class Game:
                 print(f'{self.ai_one.name} is victorious')
                 break
 
-
-        
+         
 
     def human_v_human_game(self):
-        pass
+        while self.player_one.win_count <2 or self.player_two.win_count <2:
+            self.player_one.show_gestures()
+            self.player_one.take_in_gestures()
+            print(f'{self.player_one.name} chose {self.player_one.choice_of_gesture}')
+            self.player_two.show_gestures()
+            self.player_two.take_in_gestures()
+            print(f'{self.player_two.name} chose {self.player_two.choice_of_gesture}')
+            self.game_rules_for_player(self.player_one.choice_of_gesture, self.player_two.choice_of_gesture)
+            print(self.player_one.win_count)
+            print(self.player_two.win_count)
+            if self.player_one.win_count >= 2:
+                print(f'{self.player_one.name} is victorious')
+                break
+            if self.player_two.win_count >= 2:
+                print(f'{self.player_two.name} is victorious')
+                break
+
+
+######################New way##################################
+
+    #This function removes the difference between human_ai game and a human_v_human game using just player v player(each player could be human or ai depending on above pick)
+    def player_v_player_game(self):
+        print('Use the number keys to enter your selection')
+        #sleep(.5)
+        while self.player_one.win_count <2 or self.player_two.win_count <2:
+            self.player_one.show_gestures()
+            self.player_one.take_in_gestures()
+            print(f'{self.player_one.name} chose {self.player_one.choice_of_gesture}')
+            if self.type_of_game == 0:
+                self.player_two.ai_choose_gesture()
+                self.game_rules_for_player_update(self.player_one.choice_of_gesture, self.player_two.choice_of_gesture)
+            if self.type_of_game == 1:
+                self.player_two.show_gestures()
+                self.player_two.take_in_gestures()
+                print(f'{self.player_two.name} chose {self.player_two.choice_of_gesture}')
+                self.game_rules_for_player_update(self.player_one.choice_of_gesture, self.player_two.choice_of_gesture)
+            print(self.player_one.win_count)
+            print(self.player_two.win_count)
+            if self.player_one.win_count >= 2:
+                print(f'{self.player_one.name} is victorious')
+                break
+            if self.player_two.win_count >= 2:
+                print(f'{self.player_two.name} is victorious')
+                break
+
+    def human_v_human_game_update(self):
+        while self.player_one.win_count <2 or self.player_two.win_count <2:
+            self.player_one.show_gestures()
+            self.player_one.take_in_gestures()
+            print(f'{self.player_one.name} chose {self.player_one.choice_of_gesture}')
+            self.player_two.show_gestures()
+            self.player_two.take_in_gestures()
+            print(f'{self.player_two.name} chose {self.player_two.choice_of_gesture}')
+            self.game_rules_for_player(self.player_one.choice_of_gesture, self.player_two.choice_of_gesture)
+            print(self.player_one.win_count)
+            print(self.player_two.win_count)
+            if self.player_one.win_count >= 2:
+                print(f'{self.player_one.name} is victorious')
+                break
+            if self.player_two.win_count >= 2:
+                print(f'{self.player_two.name} is victorious')
+                break
+
+
 
     def display_gestures(self):
         pass
 
     
+
+        ########Old way#############################
     def game_rules_for_player(self,gesture_one, gesture_two):
         
         if gesture_one == gesture_two:
@@ -154,3 +231,80 @@ class Game:
             self.player_one.win_count += 1
         elif gesture_two == 'Spock' and gesture_one == 'Rock':
             self.ai_one.win_count += 1
+
+
+
+
+
+ ########New way#############################
+    def game_rules_for_player_update(self,gesture_one, gesture_two):
+        
+        if gesture_one == gesture_two:
+            print('They are the same, continue')
+            self.player_one.win_count += 0
+            self.player_two.win_count += 0
+
+        #rock v scissors
+        elif gesture_one == 'Rock' and gesture_two == 'Scissors':
+            print('Rock Crushes Scissors')
+            self.player_one.win_count += 1
+        elif gesture_two == 'Rock' and gesture_one == 'Scissors':
+            print('Rock Crushes Scissors')
+            self.player_two.win_count += 1
+
+        #scissors and paper
+        elif gesture_one == 'Scissors' and gesture_two == 'Paper':
+            print('Scissors cuts paper')
+            self.player_one.win_count += 1
+        elif gesture_two == 'Scissors' and gesture_one == 'Paper':
+                self.player_two.win_count += 1
+
+        #paper and rock
+        elif gesture_one == 'Paper' and gesture_two == 'Rock':
+            print('Paper covers Rock')
+            self.player_one.win_count += 1
+        elif gesture_two == 'Paper' and gesture_one == 'Rock':
+                self.player_two.win_count += 1
+        #rock and lizard
+        elif gesture_one == 'Rock' and gesture_two == 'Lizard':
+            print('Rock crushes Lizard')
+            self.player_one.win_count += 1
+        elif gesture_two == 'Rock' and gesture_one == 'Lizard':
+            self.player_two.win_count += 1
+        #lizard and spock
+        elif gesture_one == 'Lizard' and gesture_two == 'Spock':
+            print('Lizard poisons Spock')            
+            self.player_one.win_count += 1
+        elif gesture_two == 'Lizard' and gesture_one == 'Spock':
+            self.player_two.win_count += 1
+        #spock and scissors
+        elif gesture_one == 'Spock' and gesture_two == 'Scissors':
+            print('Spock smashes Scissors')            
+            self.player_one.win_count += 1
+        elif gesture_two == 'Spock' and gesture_one == 'Scissors':
+            self.player_two.win_count += 1
+        #scissors and lizard
+        elif gesture_one == 'Scissors' and gesture_two == 'Lizard':
+            print('Scissors decapitates Lizard')            
+            self.player_one.win_count += 1
+        elif gesture_two == 'Scissors' and gesture_one == 'Lizard':
+            self.player_two.win_count += 1
+        #lizard eats paper
+        elif gesture_one == 'Lizard' and gesture_two == 'Paper':
+            print('Lizard eats Paper')            
+            self.player_one.win_count += 1
+        elif gesture_two == 'Lizard' and gesture_one == 'Paper':
+            self.player_two.win_count += 1
+        #paper disproves spock
+        elif gesture_one == 'Paper' and gesture_two == 'Spock':
+            print('Paper disproves Spock')            
+            self.player_one.win_count += 1
+        elif gesture_two == 'Paper' and gesture_one == 'Spock':
+            self.player_two.win_count += 1
+        #Spock vaporizes Rock
+        elif gesture_one == 'Spock' and gesture_two == 'Rock':
+            print('Spock vaporizes Rock')            
+            self.player_one.win_count += 1
+        elif gesture_two == 'Spock' and gesture_one == 'Rock':
+            self.player_two.win_count += 1
+            
