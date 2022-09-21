@@ -61,11 +61,13 @@ class Game:
 
     
     def player_v_player_game(self):
+        sleep(1)
         print('Use the number keys to enter your selection')
         sleep(1)
         while self.player_one.win_count <2 or self.player_two.win_count <2:
             self.player_one.show_gestures()
             self.player_one.take_in_gestures()
+            sleep(1)
             print(f'{self.player_one.name} chose {self.player_one.choice_of_gesture}')
             sleep(1)
             if self.type_of_game == 0:
@@ -74,9 +76,11 @@ class Game:
             if self.type_of_game == 1:
                 self.player_two.show_gestures()
                 self.player_two.take_in_gestures()
+                sleep(1)
                 print(f'{self.player_two.name} chose {self.player_two.choice_of_gesture}')
                 sleep(1)
                 self.game_rules_for_player_update(self.player_one.choice_of_gesture, self.player_two.choice_of_gesture)
+            sleep(1)
             print(f"{self.player_one.name}'s win count is {self.player_one.win_count}")
             sleep(1)
             print(f"{self.player_two.name}'s win count is {self.player_two.win_count}")
@@ -99,6 +103,7 @@ class Game:
         if gesture_one == gesture_two:
             sleep(1)
             print('Each player picked the same gesture, please re-pick.')
+            sleep(1)
             self.player_one.win_count += 0
             self.player_two.win_count += 0
 
