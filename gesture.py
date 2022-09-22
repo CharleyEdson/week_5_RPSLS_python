@@ -7,8 +7,6 @@ class Gesture:
         self.gestures_list = ['Rock', 'Paper', 'Scissors', 'Lizard', 'Spock']
         self.picked_gesture = ''
 
-    def which_gesture_wins(self):
-        pass
 
     def pick_gesture(self):
         correct_choice = False
@@ -26,12 +24,5 @@ class Gesture:
        
 
 
-class Rock(Gesture):
-    def __init__(self):
-        super().__init__()
-        self.name = 'Rock'
-
-    def which_gesture_wins(self):
-        pass
 
 

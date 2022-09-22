@@ -3,7 +3,7 @@ from time import sleep
 from player import Player
 from human import Human
 from AI import AI
-from gesture import Rock
+
 class Game:
     def __init__(self):
         self.player = Player()
@@ -17,8 +17,7 @@ class Game:
         self.how_many_players()
         self.decide_on_game(self.type_of_game)
         
-        
-
+  
     def display_welcome(self):
         print("Welcome to Rock Paper Scissors Lizard Spock.")
         sleep(1.5)
@@ -57,9 +56,6 @@ class Game:
             self.player_two = Human('Player two')
             self.player_v_player_game()
 
-
-
-
     
     def player_v_player_game(self):
         sleep(1)
@@ -85,11 +81,6 @@ class Game:
             if self.player_two.win_count >= 2:
                 print(f'{self.player_two.name} is victorious')
                 break
-
-
-    def display_gestures(self):
-        pass
-
     
 
     def game_rules_for_player_update(self,gesture_one, gesture_two):
