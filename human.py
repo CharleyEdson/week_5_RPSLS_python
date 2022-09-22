@@ -15,6 +15,7 @@ class Human(Player):
             counter += 1
 
     def take_in_gestures(self):
+        self.show_gestures()
         correct_choice = False
         while correct_choice is False:
             num_choice = int(input('Choose your gesture: '))
