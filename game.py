@@ -3,6 +3,7 @@ from time import sleep
 from player import Player
 from human import Human
 from AI import AI
+from gesture import Rock
 class Game:
     def __init__(self):
         self.player = Player()
@@ -65,11 +66,12 @@ class Game:
         print('Use the number keys to enter your selection')
         sleep(1)
         while self.player_one.win_count <2 or self.player_two.win_count <2:
-            self.player_one.take_in_gestures()
+            self.player_one.take_in_gesture_update()
+            
             sleep(1)
             print(f'{self.player_one.name} chose {self.player_one.choice_of_gesture}')
             sleep(1)
-            self.player_two.take_in_gestures()
+            self.player_two.take_in_gesture_update()
             print(f'{self.player_two.name} chose {self.player_two.choice_of_gesture}')
             self.game_rules_for_player_update(self.player_one.choice_of_gesture, self.player_two.choice_of_gesture)                 
             sleep(1)
